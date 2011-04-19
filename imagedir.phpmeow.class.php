@@ -1,6 +1,6 @@
 <?php
 
-class imagedir
+class phpmeow_imagedir
 {
 	function load_images_from_subdir( $dirpath )
 	{
