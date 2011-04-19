@@ -144,8 +144,26 @@ class phpmeow_animal
 		return imagejpeg( $im );
 	}
 	
-	function create( $imagepath )
+	/* For the sake of convenience.  --Kris */
+	function create( $imagepath, $widthmod = 0, $heightmod = 0 )
 	{
+		require( "config.phpmeow.php" );
+		require_once( "imagedir.phpmeow.class.php" );
 		
+		$imagedir = new phpmeow_imagedir();
+		if ( !( $animals = $imagedir->load_cute_fuzzy_animals( $phpmeow_animalsdir ) ) )
+		{
+			return FALSE;
+		}
+		
+		$im = self::load_image( $imagepath, mt_rand( -25, 25 ), mt_rand( -25, 25 ) );
+		$im = self::add_static( $im );
+		self::modify_tint( $im );
+		self::sketch( $im );
+		self::negative( $im );
+		self::blur( $im );
+		self::grayscale( $im );
+		
+		self::render( $im );
 	}
 }
