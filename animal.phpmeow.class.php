@@ -141,11 +141,13 @@ class phpmeow_animal
 	{
 		header( "Content-Type: image/jpeg" );
 		
-		return imagejpeg( $im );
+		$ok = imagejpeg( $im );
+		
+		return $ok;
 	}
 	
 	/* For the sake of convenience.  --Kris */
-	function create( $imagepath, $widthmod = 0, $heightmod = 0 )
+	function create( $imagepath, $widthmod = 0, $heightmod = 0, $skiprender = FALSE )
 	{
 		require( "config.phpmeow.php" );
 		require_once( "imagedir.phpmeow.class.php" );
@@ -156,7 +158,7 @@ class phpmeow_animal
 			return FALSE;
 		}
 		
-		$im = self::load_image( $imagepath, mt_rand( -25, 25 ), mt_rand( -25, 25 ) );
+		$im = self::load_image( $imagepath, $widthmod, $heightmod );
 		$im = self::add_static( $im );
 		self::modify_tint( $im );
 		self::sketch( $im );
@@ -164,6 +166,11 @@ class phpmeow_animal
 		self::blur( $im );
 		self::grayscale( $im );
 		
-		self::render( $im );
+		if ( $skiprender == FALSE )
+		{
+			self::render( $im );
+		}
+		
+		return $im;
 	}
 }
