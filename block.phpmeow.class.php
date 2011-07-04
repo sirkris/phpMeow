@@ -97,6 +97,78 @@ class phpmeow_block
 		return $allocation;
 	}
 	
+	/* Randomly select an image from each specified category.  --Kris */
+	function assign_animals( $allocation, $animals )
+	{
+		require( "config.phpmeow.php" );
+		
+		$images = array();
+		
+		foreach ( $allocation as $akey => $aval )
+		{
+			do
+			{
+				$newimage = $animals[$aval][mt_rand( 0, count( $animals[$aval] ) - 1 )];
+				
+				$dup = FALSE;
+				foreach ( $images as $ikey => $ival )
+				{
+					if ( strcmp( $newimage, $ival ) == 0 )
+					{
+						$dup = TRUE;
+						break;
+					}
+				}
+			} while ( $dup == TRUE );
+			
+			$images[] = $newimage;
+		}
+		
+		return $images;
+	}
+	
+	/* Put the animals into their respective cages.  Make sure they have plenty of air and water.  --Kris */
+	function boxify_images( $images )
+	{
+		require( "config.phpmeow.php" );
+		
+		$animal = new phpmeow_animal();
+		
+		$left_mod = mt_rand( ($phpmeow_animal_width / 5) * -1, $phpmeow_animal_width / 5 );
+		$top_mod = mt_rand( ($phpmeow_animal_height / 5) * -1, $phpmeow_animal_height / 5 );
+		
+		$right_mod = 0 - $left_mod;
+		$bottom_mod = 0 - $top_mod;
+		
+		/* Load the image resources without rendering.  --Kris */
+		$ims = array();
+		
+		foreach ( $images as $ikey => $ival )
+		{
+			if ( $ikey % 2 == 0 )
+			{
+				$xmod = $left_mod;
+			}
+			else
+			{
+				$xmod = $right_mod;
+			}
+			
+			if ( $ikey <= 1 )
+			{
+				$ymod = $top_mod;
+			}
+			else
+			{
+				$ymod = $bottom_mod;
+			}
+			
+			$ims[$ikey] = $animal->create( $ival, $xmod, $ymod, TRUE );
+		}
+		
+		return $ims;
+	}
+	
 	/*
 	 * Array keys must correspond to the following layout:
 	 * 
