@@ -2,6 +2,101 @@
 
 class phpmeow_block
 {
+	/* Determine which animals to allocate to a block, depending on whether it's been designated as a correct answer or not.  --Kris */
+	function allocate( $whichblock, $correct_blocks, $required )
+	{
+		require( "config.phpmeow.php" );
+		
+		$allocation = array();
+		
+		$correct = FALSE;
+		foreach ( $correct_boxes as $ckey => $cval )
+		{
+			if ( $whichblock == $cval )
+			{
+				$correct = TRUE;
+				break;
+			}
+		}
+		
+		$total = 4;
+		if ( $correct == TRUE )
+		{
+			foreach ( $required as $rkey => $requirement )
+			{
+				foreach ( $requirement as $creature => $quantity )
+				{
+					for ( $qloop = 1; $qloop <= $quantity; $qloop++ )
+					{
+						$allocation[$total] = $creature;
+						$total--;
+					}
+				}
+			}
+		}
+		
+		/* Random animals/junk to fill any remaining squares.  --Kris */
+		do
+		{
+			for ( $picloop = 1; $picloop <= $total; $picloop++ )
+			{
+				do
+				{
+					$allocation[$picloop] = mt_rand( 0, count( $arr ) - 1 );
+					
+					$dup = FALSE;
+					for ( $subloop = 1; $subloop < $picloop; $subloop++ )
+					{
+						if ( $allocation[$picloop] == $allocation[$subloop] )
+						{
+							$dup = TRUE;
+							break;
+						}
+					}
+				} while ( $dup == TRUE );
+				
+				$allocation[$picloop] = $arr[$allocation[$picloop]];
+			}
+			
+			/* If not intended to be correct, make sure it isn't correct anyway by random chance.  If it is, regenerate.  --Kris */
+			$invalid = FALSE;
+			if ( $correct == FALSE )
+			{
+				$invalid = TRUE;
+				foreach ( $required as $rkey => $requirement )
+				{
+					foreach ( $requirement as $creature => $quantity )
+					{
+						if ( count( array_keys( $allocation, $creature ) ) != $quantity )
+						{
+							$invalid = FALSE;
+							break;
+						}
+					}
+				}
+			}
+			/* If it is intended to be correct, make sure the randomness didn't screw up the quantity.  --Kris */
+			else
+			{
+				foreach ( $required as $rkey => $requirement )
+				{
+					foreach ( $requirement as $creature => $quantity )
+					{
+						if ( count( array_keys( $allocation, $creature ) ) != $quantity )
+						{
+							$invalid = TRUE;
+							break;
+						}
+					}
+				}
+			}
+		} while ( $invalid == TRUE );
+		
+		shuffle( $allocation );
+		
+		return $allocation;
+	}
+	
 	/*
 	 * Array keys must correspond to the following layout:
 	 * 
