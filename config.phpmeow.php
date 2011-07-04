@@ -47,6 +47,7 @@ $phpmeow_enchash = "sha512";  // Currently supported:  md5, sha1, sha256, sha512
  */
 
 /* Handle all the class includes in one place for the sake of simplicity.  --Kris */
+require_once( "phpmeow.class.php" );
 require_once( "imagedir.phpmeow.class.php" );
 require_once( "animal.phpmeow.class.php" );
 require_once( "block.phpmeow.class.php" );
