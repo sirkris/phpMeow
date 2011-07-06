@@ -205,6 +205,24 @@ class phpmeow_block
 		return $blockim;
 	}
 	
+	/* This generates the actual HTML img tag.  The image resource is destroyed immediately after the image script is called.  --Kris */
+	function render( $ims )
+	{
+		require( "config.php" );
+		
+		$session = new phpmeow_session();
+		$session->start();
+		
+		$blockim = self::merge_animals( $ims );
+		
+		$block_key = "blockfile_" . $session->generate_sid( 20 );
+		$_SESSION[$block_key] = "phpMeow_temp/" . $_SERVER["REMOTE_ADDR"] . "-" . $session->generate_sid() . ".jpg";
+		
+		self::save( $blockim, $_SESSION[$block_key] );
+		
+		print "<img src=\"animal.image.phpmeow.php?getkey=" . urlencode( $block_key ) . "\" />";
+	}
+	
 	/* Saves to disk for swapping purposes.  --Kris */
 	function save( $blockim, $filename )
 	{
