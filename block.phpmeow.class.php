@@ -224,6 +224,7 @@ class phpmeow_block
 		print " id=\"phpmeow_block" . $whichblock . "\" onClick=\"phpmeow_selblock( this );\">";
 		print "<img src=\"animal.image.phpmeow.php?getkey=" . urlencode( $block_key ) . "\" />";
 		print "</div>";
+		print "<input type=\"hidden\" name=\"fphpmeow_block" . $whichblock . "\" id=\"fphpmeow_block" . $whichblock . "\" value=\"0\" />";
 	}
 	
 	/* Saves to disk for swapping purposes.  --Kris */
