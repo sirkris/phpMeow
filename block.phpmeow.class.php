@@ -206,7 +206,7 @@ class phpmeow_block
 	}
 	
 	/* This generates the actual HTML img tag.  The image resource is destroyed immediately after the image script is called.  --Kris */
-	function render( $ims )
+	function render( $ims, $whichblock )
 	{
 		require( "config.php" );
 		
@@ -220,7 +220,10 @@ class phpmeow_block
 		
 		self::save( $blockim, $_SESSION[$block_key] );
 		
+		print "<div style=\"position: absolute; left: 100px; top: 100px; border: 10px solid navy\" name=\"phpmeow_block" . $whichblock . "\"";
+		print " id=\"phpmeow_block" . $whichblock . "\" onClick=\"phpmeow_selblock( this );\">";
 		print "<img src=\"animal.image.phpmeow.php?getkey=" . urlencode( $block_key ) . "\" />";
+		print "</div>";
 	}
 	
 	/* Saves to disk for swapping purposes.  --Kris */
