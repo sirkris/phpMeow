@@ -1,6 +1,6 @@
 function phpmeow_selblock( div )
 {
-	infield = document.getElementById( "f" + id );
+	var infield = document.getElementById( "f" + div.id );
 	if ( infield.value == 0 )
 	{
 		div.style.border = "10px solid yellow";
