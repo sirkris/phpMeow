@@ -57,7 +57,16 @@ class phpmeow
 		/* Begin HTML generation.  --Kris */
 		print "\r\n<!-- Begin phpMeow code. -->\r\n";
 		
-		print "<b style=\"color: blue\">KittenAuth:&nbsp; To prove you're not a robot, please click <i>all</i> blocks that contain </b>";
+		$top_margin = 5;
+		
+		$totalwidth = ($phpmeow_blocks_x * ($phpmeow_animal_width * 2)) + ($phpmeow_blocks_x * $phpmeow_padding_x);
+		$totalheight = $top_margin + ($phpmeow_blocks_y * ($phpmeow_animal_height * 2)) + ($phpmeow_blocks_y * $phpmeow_padding_y);
+		
+		print "<div style=\"position: absolute; left: 0px; top: " . $top_margin . "px; width: " . $totalwidth . "px; text-align: center\">\r\n";
+		
+		print "<div style=\"width: 75%; margin: auto; background-color: #DEDEFF; border: 1px solid black\">\r\n";
+		
+		print "<b style=\"color: blue\">KittenAuth</b><br /><b style=\"color: navy\">To prove you're not a robot, please click <i>all</i> blocks that contain </b>";
 		
 		$checklist = array();
 		foreach ( $required as $rkey => $reqs )
@@ -91,12 +100,16 @@ class phpmeow
 			$requirements .= $req;
 		}
 		
-		print "<b style=\"color: red\">" . $requirements . "</b>.";
+		print "<b style=\"color: red\">" . $requirements . "</b>.\r\n";
+		
+		print "</div>\r\n";
+		
+		print "</div>\r\n";
 		
 		print "<form name=\"phpmeow\" id=\"phpmeow\" action=\"phpmeow_confirm.php\" method=\"POST\">\r\n";
 		
 		$x = 0;
-		$y = 50;
+		$y = 60;
 		for ( $divyloop = 1; $divyloop <= $phpmeow_blocks_y; $divyloop++ )
 		{
 			for ( $divxloop = 1; $divxloop <= $phpmeow_blocks_x; $divxloop++ )
@@ -116,6 +129,15 @@ class phpmeow
 			$x = 0;
 			$y += ($phpmeow_animal_height * 2) + $phpmeow_padding_y;
 		}
+		
+		print "<div style=\"position: absolute; left: 0px; top: " . ($totalheight + 50) . "px; width: " . $totalwidth . "px; text-align: center\">\r\n";
+		print "<span class=\"credit\">";
+		print "Powered by phpMeow v" . $phpmeow_version . ".&nbsp; ";
+		print "Created by <a href=\"http://www.facebook.com/Kris.Craig\" target=\"_blank\">Kris Craig</a>.";
+		print "</span>\r\n";
+		print "<br />\r\n";
+		print "<input type=\"submit\" name=\"phpmeow_submit\" id=\"phpmeow_submit\" value=\"Yes, I'm a Real Person!\" />";
+		print "</div>\r\n";
 		
 		print "</form>\r\n";
 		
