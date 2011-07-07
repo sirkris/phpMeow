@@ -57,10 +57,46 @@ class phpmeow
 		/* Begin HTML generation.  --Kris */
 		print "\r\n<!-- Begin phpMeow code. -->\r\n";
 		
+		print "<b style=\"color: blue\">KittenAuth:&nbsp; To prove you're not a robot, please click <i>all</i> blocks that contain </b>";
+		
+		$checklist = array();
+		foreach ( $required as $rkey => $reqs )
+		{
+			foreach ( $reqs as $category => $quantity )
+			{
+				$checklist[] = "$quantity " . ($quantity == 1 ? $singular[$category] : $category);
+			}
+		}
+		
+		$requirements = NULL;
+		$i = 0;
+		foreach ( $checklist as $req )
+		{
+			$i++;
+			if ( $requirements != NULL )
+			{
+				/* I like the Oxford Comma.  --Kris */
+				if ( $i < count( $checklist ) || count( $checklist ) > 2 )
+				{
+					$requirements .= ",";
+				}
+				
+				$requirements .= " ";
+				if ( $i == count( $checklist ) )
+				{
+					$requirements .= "and ";
+				}
+			}
+			
+			$requirements .= $req;
+		}
+		
+		print "<b style=\"color: red\">" . $requirements . "</b>.";
+		
 		print "<form name=\"phpmeow\" id=\"phpmeow\" action=\"phpmeow_confirm.php\" method=\"POST\">\r\n";
 		
 		$x = 0;
-		$y = 0;
+		$y = 50;
 		for ( $divyloop = 1; $divyloop <= $phpmeow_blocks_y; $divyloop++ )
 		{
 			for ( $divxloop = 1; $divxloop <= $phpmeow_blocks_x; $divxloop++ )
