@@ -48,6 +48,13 @@ $phpmeow_enchash = "sha512";  // Currently supported:  md5, sha1, sha256, sha512
 /* Set to FALSE if you don't want the option of overriding any of the variables in this config file (only applies to phpmeow class).  --Kris */
 $phpmeow_allowoverride = TRUE;
 
+/* Our plurals => singulars.  If you add any animals to the mix, make sure to add a corresponding entry here!  --Kris */
+$singular = array();
+$singular["birds"] = "bird";
+$singular["fish"] = "fish";
+$singular["kittens"] = "kitten";
+$singular["puppies"] = "puppy";
+
 
 /*
  * XXXX ---- Do not edit below this line! ---- XXXX
@@ -60,3 +67,6 @@ require_once( "animal.phpmeow.class.php" );
 require_once( "block.phpmeow.class.php" );
 require_once( "session.phpmeow.class.php" );
 require_once( "encryption.phpmeow.class.php" );
+
+/* The phpMeow version number.  First non-empty master commit starts at 1.0, then increment by +0.1 with each subsequent master commit on GitHub.  --Kris */
+$phpmeow_version = "0.00a";
