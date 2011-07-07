@@ -128,11 +128,9 @@ class phpmeow_block
 	}
 	
 	/* Put the animals into their respective cages.  Make sure they have plenty of air and water.  --Kris */
-	function boxify_images( $images )
+	function boxify_images( $images, $animal )
 	{
 		require( "config.phpmeow.php" );
-		
-		$animal = new phpmeow_animal();
 		
 		$left_mod = mt_rand( ($phpmeow_animal_width / 5) * -1, $phpmeow_animal_width / 5 );
 		$top_mod = mt_rand( ($phpmeow_animal_height / 5) * -1, $phpmeow_animal_height / 5 );
@@ -206,9 +204,9 @@ class phpmeow_block
 	}
 	
 	/* This generates the actual HTML img tag.  The image resource is destroyed immediately after the image script is called.  --Kris */
-	function render( $ims, $whichblock )
+	function render( $ims, $whichblock, $xpos = 0, $ypos = 0 )
 	{
-		require( "config.php" );
+		require( "config.phpmeow.php" );
 		
 		$session = new phpmeow_session();
 		$session->start();
@@ -220,7 +218,7 @@ class phpmeow_block
 		
 		self::save( $blockim, $_SESSION[$block_key] );
 		
-		print "<div style=\"position: absolute; left: 100px; top: 100px; border: 10px solid navy\" name=\"phpmeow_block" . $whichblock . "\"";
+		print "<div style=\"position: absolute; left: " . $xpos . "px; top: " . $ypos . "px; border: 10px solid navy\" name=\"phpmeow_block" . $whichblock . "\"";
 		print " id=\"phpmeow_block" . $whichblock . "\" onClick=\"phpmeow_selblock( this );\">";
 		print "<img src=\"animal.image.phpmeow.php?getkey=" . urlencode( $block_key ) . "\" />";
 		print "</div>";
