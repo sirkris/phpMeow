@@ -41,6 +41,9 @@ $phpmeow_boxes_y = 2;
 /* Password encryption method.  --Kris */
 $phpmeow_enchash = "sha512";  // Currently supported:  md5, sha1, sha256, sha512
 
+/* Set to FALSE if you don't want the option of overriding any of the variables in this config file.  --Kris */
+$phpmeow_allowoverride = TRUE;
+
 
 /*
  * XXXX ---- Do not edit below this line! ---- XXXX

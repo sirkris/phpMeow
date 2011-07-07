@@ -19,6 +19,24 @@ class phpmeow
 		}
 	}
 	
+	/* Call this function from your script to invoke phpMeow!  --Kris */
+	function main()
+	{
+		require( "config.phpmeow.php" );
+		
+		/* You can override any config.phpmeow.php variables when initializing the class instance.  --Kris */
+		foreach ( $this as $varname => $value )
+		{
+			if ( !isset( $$varname ) || $phpmeow_allowoverride == TRUE )
+			{
+				$$varname = $value;
+			}
+		}
+		
+		
+	}
+	
+	/* Determine what the correct answer will be.  --Kris */
 	function get_requirements()
 	{
 		require( "config.phpmeow.php" );
@@ -64,6 +82,7 @@ class phpmeow
 		return $required;
 	}
 	
+	/* Determine which blocks will have the correct answer.  --Kris */
 	function get_correct_blocks()
 	{
 		require( "config.phpmeow.php" );
