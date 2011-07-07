@@ -41,7 +41,7 @@ class phpmeow
 		$block = new phpmeow_block();
 		$imagedir = new phpmeow_imagedir();
 		$animal = new phpmeow_animal();
-			
+		
 		$animals = $imagedir->load_cute_fuzzy_animals( $phpmeow_animalsdir );
 		
 		$animarr = array();
@@ -61,13 +61,13 @@ class phpmeow
 		
 		$x = 0;
 		$y = 0;
-		for ( $divyloop = 1; $divyloop <= $phpmeow_boxes_y; $divyloop++ )
+		for ( $divyloop = 1; $divyloop <= $phpmeow_blocks_y; $divyloop++ )
 		{
-			for ( $divxloop = 1; $divxloop <= $phpmeow_boxes_x; $divxloop++ )
+			for ( $divxloop = 1; $divxloop <= $phpmeow_blocks_x; $divxloop++ )
 			{
 				/* Construct the cage for our furry little friends.  --Kris */
-				$whichblock = (($divyloop - 1) * $phpmeow_boxes_x) + $divxloop;
-				$allocation = $block->allocate( $whichblock, $correct_blocks, $required );
+				$whichblock = (($divyloop - 1) * $phpmeow_blocks_x) + $divxloop;
+				$allocation = $block->allocate( $whichblock, $correct_blocks, $required, $animarr );
 				$images = $block->assign_animals( $allocation, $animals );
 				$ims = $block->boxify_images( $images, $animal );
 				

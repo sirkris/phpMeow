@@ -35,12 +35,12 @@ $phpmeow_blur_probability = 3;
 $phpmeow_grayscale_probability = 7;
 
 /* Sets how many blocks horizontally by how many vertically.  The more you have, the more secure you'll be.  --Kris */
-$phpmeow_boxes_x = 5;
-$phpmeow_boxes_y = 2;
+$phpmeow_blocks_x = 4;
+$phpmeow_blocks_y = 2;
 
 /* How much padding (in pixels) between each block.  Don't forget to factor in the div border area!  --Kris */
-$phpmeow_padding_x = 15;
-$phpmeow_padding_y = 15;
+$phpmeow_padding_x = 30;
+$phpmeow_padding_y = 30;
 
 /* Password encryption method.  --Kris */
 $phpmeow_enchash = "sha512";  // Currently supported:  md5, sha1, sha256, sha512

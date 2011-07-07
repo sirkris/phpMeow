@@ -3,14 +3,14 @@
 class phpmeow_block
 {
 	/* Determine which animals to allocate to a block, depending on whether it's been designated as a correct answer or not.  --Kris */
-	function allocate( $whichblock, $correct_blocks, $required )
+	function allocate( $whichblock, $correct_blocks, $required, $animarr )
 	{
 		require( "config.phpmeow.php" );
 		
 		$allocation = array();
 		
 		$correct = FALSE;
-		foreach ( $correct_boxes as $ckey => $cval )
+		foreach ( $correct_blocks as $ckey => $cval )
 		{
 			if ( $whichblock == $cval )
 			{
@@ -42,7 +42,7 @@ class phpmeow_block
 			{
 				do
 				{
-					$allocation[$picloop] = mt_rand( 0, count( $arr ) - 1 );
+					$allocation[$picloop] = mt_rand( 0, count( $animarr ) - 1 );
 					
 					$dup = FALSE;
 					for ( $subloop = 1; $subloop < $picloop; $subloop++ )
@@ -55,7 +55,7 @@ class phpmeow_block
 					}
 				} while ( $dup == TRUE );
 				
-				$allocation[$picloop] = $arr[$allocation[$picloop]];
+				$allocation[$picloop] = $animarr[$allocation[$picloop]];
 			}
 			
 			/* If not intended to be correct, make sure it isn't correct anyway by random chance.  If it is, regenerate.  --Kris */
