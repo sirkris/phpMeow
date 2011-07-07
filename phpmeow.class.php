@@ -2,6 +2,20 @@
 
 class phpmeow
 {
+	/* If passing args, arg 0 must be an array containing the variable names to which to assign each subsequent arg value.  --Kris */
+	public function __construct()
+	{
+		$args = func_get_args();
+		
+		if ( is_array( $args[0] ) && count( $args ) - 1 == count( $args[0] ) && count( $args ) > 1 )
+		{
+			foreach ( $args[0] as $arkey => $varname )
+			{
+				$this->$varname = $args[$arkey + 1];
+			}
+		}
+	}
+	
 	function get_requirements()
 	{
 		require( "config.phpmeow.php" );
