@@ -64,7 +64,7 @@ class phpmeow
 		
 		print "<div style=\"position: absolute; left: 0px; top: " . $top_margin . "px; width: " . $totalwidth . "px; text-align: center\">\r\n";
 		
-		print "<div style=\"width: 75%; margin: auto; background-color: #DEDEFF; border: 1px solid black\">\r\n";
+		print "<div style=\"width: 92%; margin: auto; background-color: #DEDEFF; border: 1px solid black\">\r\n";
 		
 		print "<b style=\"color: blue\">KittenAuth</b><br /><b style=\"color: navy\">To prove you're not a robot, please click <i>all</i> blocks that contain </b>";
 		
