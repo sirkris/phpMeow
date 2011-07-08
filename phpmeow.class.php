@@ -73,7 +73,7 @@ class phpmeow
 		{
 			foreach ( $reqs as $category => $quantity )
 			{
-				$checklist[] = "$quantity " . ($quantity == 1 ? $singular[$category] : $category);
+				$checklist[] = "$quantity " . ($quantity == 1 ? $phpmeow_singular[$category] : $category);
 			}
 		}
 		

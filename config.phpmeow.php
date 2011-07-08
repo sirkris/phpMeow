@@ -52,11 +52,11 @@ $phpmeow_enchash = "sha512";  // Currently supported:  md5, sha1, sha256, sha512
 $phpmeow_allowoverride = TRUE;
 
 /* Our plurals => singulars.  If you add any animals to the mix, make sure to add a corresponding entry here!  --Kris */
-$singular = array();
-$singular["birds"] = "bird";
-$singular["fish"] = "fish";
-$singular["kittens"] = "kitten";
-$singular["puppies"] = "puppy";
+$phpmeow_singular = array();
+$phpmeow_singular["birds"] = "bird";
+$phpmeow_singular["fish"] = "fish";
+$phpmeow_singular["kittens"] = "kitten";
+$phpmeow_singular["puppies"] = "puppy";
 
 
 /*
