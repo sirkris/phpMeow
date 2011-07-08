@@ -8,6 +8,9 @@
  * If you want the images to retain their original size (i.e. no resizing by the script), 
  * set both the height and width to 100.
  * 
+ * Note - If you shrink the animals, you may need to tweak the upper div width in 
+ * phpmeow::main() in phpmeow.class.php.
+ * 
  * --Kris
  */
 $phpmeow_animal_width = 75;
