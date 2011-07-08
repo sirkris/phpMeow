@@ -106,8 +106,6 @@ class phpmeow
 		
 		print "</div>\r\n";
 		
-		print "<form name=\"phpmeow\" id=\"phpmeow\" action=\"phpmeow_confirm.php\" method=\"POST\">\r\n";
-		
 		$x = 0;
 		$y = 60;
 		for ( $divyloop = 1; $divyloop <= $phpmeow_blocks_y; $divyloop++ )
@@ -135,11 +133,7 @@ class phpmeow
 		print "Powered by phpMeow v" . $phpmeow_version . ".&nbsp; ";
 		print "Created by <a href=\"http://www.facebook.com/Kris.Craig\" target=\"_blank\">Kris Craig</a>.";
 		print "</span>\r\n";
-		print "<br />\r\n";
-		print "<input type=\"submit\" name=\"phpmeow_submit\" id=\"phpmeow_submit\" value=\"Yes, I'm a Real Person!\" />";
 		print "</div>\r\n";
-		
-		print "</form>\r\n";
 		
 		print "<!-- End phpMeow code. -->\r\n\r\n";
 	}
