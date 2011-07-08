@@ -5,10 +5,13 @@
  * The lower they are, the more you'll be able to fit on screen.  The more you can fit, 
  * the more secure it will be.
  * 
+ * If you want the images to retain their original size (i.e. no resizing by the script), 
+ * set both the height and width to 100.
+ * 
  * --Kris
  */
-$phpmeow_animal_width = 100;
-$phpmeow_animal_height = 100;
+$phpmeow_animal_width = 75;
+$phpmeow_animal_height = 75;
 
 /* Directory containing the phpMeow images.  --Kris */
 $phpmeow_animalsdir = "phpMeow_images";
