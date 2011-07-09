@@ -54,6 +54,9 @@ class phpmeow
 		$required = self::get_requirements( $animals, $animarr );
 		$correct_blocks = self::get_correct_blocks();
 		
+		/* Store our session data for validation.  --Kris */
+		$_SESSION["correct_blocks"] = $correct_blocks;
+		
 		/* Begin HTML generation.  --Kris */
 		print "\r\n<!-- Begin phpMeow code. -->\r\n";
 		
@@ -134,6 +137,9 @@ class phpmeow
 		print "Created by <a href=\"http://www.facebook.com/Kris.Craig\" target=\"_blank\">Kris Craig</a>.";
 		print "</span>\r\n";
 		
+		/* Referer is not always reliable.  --Kris */
+		print "<input type=\"hidden\" name=\"phpmeow_referer\" id=\"phpmeow_referer\" value=\"" . $_SERVER["SCRIPT_NAME"] . "\" />\r\n";
+		
 		/* Use this if you want phpMeow to place your submit button at the bottom without having to guess the absolute positioning.  --Kris */
 		if ( $phpmeow_submit_include == TRUE )
 		{
@@ -142,6 +148,13 @@ class phpmeow
 		}
 		
 		print "</div>\r\n";
+		
+		if ( isset( $_GET["phpmeow_fail_msg"] ) )
+		{
+			print "<script language=\"JavaScript\">";
+			print "alert( \"" . $_GET["phpmeow_fail_msg"] . "\" );";
+			print "</script>";
+		}
 		
 		print "<!-- End phpMeow code. -->\r\n\r\n";
 	}
@@ -248,5 +261,130 @@ class phpmeow
 		}
 		
 		return $correct_blocks;
+	}
+	
+	/* Compares the POST data against the SESSION data and returns whether the user-selected boxes are correct.  --Kris */
+	function validate()
+	{
+		if ( !isset( $_POST ) || !isset( $_SESSION ) || !isset( $_SESSION["correct_blocks"] ) || !is_array( $_SESSION["correct_blocks"] ) 
+			|| empty( $_SESSION["correct_blocks"] ) )
+		{
+			return FALSE;
+		}
+		
+		$selcount = 0;
+		foreach ( $_POST as $postvar => $postval )
+		{
+			if ( strcmp( substr( $postvar, 0, 14 ), "fphpmeow_block" ) )
+			{
+				continue;
+			}
+			
+			$selcount++;
+			$whichblock = substr( $postvar, 14, strlen( $postvar ) - 14 );
+			
+			$correct = FALSE;
+			foreach ( $_SESSION["correct_blocks"] as $correct_block )
+			{
+				if ( $whichblock == $correct_block )
+				{
+					$correct = TRUE;
+					break;
+				}
+			}
+			
+			if ( ( $correct == TRUE && $postval != 1 ) || ( $correct == FALSE && $postval == 1 ) )
+			{
+				return FALSE;
+			}
+		}
+		
+		if ( $selcount < 1 )
+		{
+			return FALSE;
+		}
+		
+		return TRUE;
+	}
+	
+	/* Redirect to the form and tell the user the answers did not match.  Pass back the post values for optional auto-fill.  --Kris */
+	function fail_redirect()
+	{
+		$getvars = NULL;
+		foreach ( $_POST as $postvar => $postval )
+		{
+			if ( strcmp( substr( $postvar, 0, 8 ), "fphpmeow" ) == 0 
+				|| strcmp( substr( $postvar, 0, 7 ), "phpmeow" ) == 0 )
+			{
+				continue;
+			}
+			
+			if ( $getvars == NULL )
+			{
+				$getvars .= "?";
+			}
+			else
+			{
+				$getvars .= "&";
+			}
+			
+			$getvars .= urlencode( $postvar ) . "=" . urlencode( $postval );
+		}
+		
+		$selcount = 0;
+		foreach ( $_POST as $postvar => $postval )
+		{
+			if ( strcmp( substr( $postvar, 0, 14 ), "fphpmeow_block" ) == 0 && $postval == 1 )
+			{
+				$selcount++;
+			}
+		}
+		
+		if ( $selcount == 0 )
+		{
+			if ( $getvars == NULL )
+			{
+				$getvars .= "?";
+			}
+			else
+			{
+				$getvars .= "&";
+			}
+			
+			$getvars .= "phpmeow_fail_msg=";
+			$getvars .= urlencode( "You forgot to do the KittenAuth verification!  Please try again." );
+		}
+		else
+		{
+			$getvars .= "&phpmeow_fail_msg=";
+			$getvars .= urlencode( "Your KittenAuth selections were incorrect!  Please try again." );
+		}
+		
+		header( "Location: " . $_POST["phpmeow_referer"] . $getvars );
+		die();
+	}
+	
+	/* This will mindlessly auto-fill your form fields from the GET variables IF phpMeow returned a fail.  Use this if you're lazy.  --Kris */
+	function autofill()
+	{
+		if ( !isset( $_GET["phpmeow_fail_msg"] ) )
+		{
+			return;
+		}
+		
+		print "<script language=\"JavaScript\">\r\n";
+		
+		foreach ( $_GET as $getvar => $getval )
+		{
+			if ( strcmp( substr( $getvar, 0, 8 ), "fphpmeow" ) == 0 
+				|| strcmp( substr( $getvar, 0, 7 ), "phpmeow" ) == 0 )
+			{
+				continue;
+			}
+			
+			print "document.getElementById( \"" . $getvar . "\" ).value=\"" . $getval . "\";\r\n";
+		}
+		
+		print "</script>\r\n";
 	}
 }
