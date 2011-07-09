@@ -67,7 +67,7 @@ class phpmeow_block
 				{
 					foreach ( $requirement as $creature => $quantity )
 					{
-						if ( count( array_keys( $allocation, $creature ) ) != $quantity )
+						if ( count( array_keys( $allocation, $creature ) ) < $quantity )
 						{
 							$invalid = FALSE;
 							break;
