@@ -61,6 +61,12 @@ $phpmeow_singular["fish"] = "fish";
 $phpmeow_singular["kittens"] = "kitten";
 $phpmeow_singular["puppies"] = "puppy";
 
+/* Sets whether security functions will cross-reference IP address with session.  Enable only if session-based tracking isn't stopping a bot attack.  --Kris */
+$phpmeow_security_use_ip = FALSE;
+
+/* If your site is under a bot attack, enable this to auto-ban troublesome IP addresses.  Use at your own risk.  --Kris */
+$phpmeow_security_autoban_ip = FALSE;
+
 
 /*
  * XXXX ---- Do not edit below this line! ---- XXXX
