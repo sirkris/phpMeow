@@ -157,6 +157,7 @@ class phpmeow
 		
 		$junkmax = mt_rand( 0, 3 );
 		$total = 4;
+		$max_reqs = 3;
 		do
 		{
 			$required[$total] = array();
@@ -179,6 +180,12 @@ class phpmeow
 				$required[$total][$animarr[$req]] = $reqnum;
 				
 				$total -= $reqnum;
+				
+				/* We should limit the number of parameters to 3 so everything will fit.  --Kris */
+				if ( count( $required ) >= $max_reqs )
+				{
+					break;
+				}
 			}
 		} while ( $total > $junkmax );
 		
