@@ -133,6 +133,14 @@ class phpmeow
 		print "Powered by phpMeow v" . $phpmeow_version . ".&nbsp; ";
 		print "Created by <a href=\"http://www.facebook.com/Kris.Craig\" target=\"_blank\">Kris Craig</a>.";
 		print "</span>\r\n";
+		
+		/* Use this if you want phpMeow to place your submit button at the bottom without having to guess the absolute positioning.  --Kris */
+		if ( $phpmeow_submit_include == TRUE )
+		{
+			print "<br /><br />\r\n";
+			print "<input type=\"submit\" name=\"phpmeow_submit\" id=\"phpmeow_submit\" value=\"$phpmeow_submit_value\" />\r\n";
+		}
+		
 		print "</div>\r\n";
 		
 		print "<!-- End phpMeow code. -->\r\n\r\n";
