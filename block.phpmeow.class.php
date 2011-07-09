@@ -219,10 +219,10 @@ class phpmeow_block
 		self::save( $blockim, $_SESSION[$block_key] );
 		
 		print "<div style=\"position: absolute; left: " . $xpos . "px; top: " . $ypos . "px; border: 10px solid navy\" name=\"phpmeow_block" . $whichblock . "\"";
-		print " id=\"phpmeow_block" . $whichblock . "\" onClick=\"phpmeow_selblock( this );\">";
-		print "<img src=\"animal.image.phpmeow.php?getkey=" . urlencode( $block_key ) . "\" />";
-		print "</div>";
-		print "<input type=\"hidden\" name=\"fphpmeow_block" . $whichblock . "\" id=\"fphpmeow_block" . $whichblock . "\" value=\"0\" />";
+		print " id=\"phpmeow_block" . $whichblock . "\" onClick=\"phpmeow_selblock( this );\">\r\n";
+		print "<img src=\"animal.image.phpmeow.php?getkey=" . urlencode( $block_key ) . "\" />\r\n";
+		print "</div>\r\n";
+		print "<input type=\"hidden\" name=\"fphpmeow_block" . $whichblock . "\" id=\"fphpmeow_block" . $whichblock . "\" value=\"0\" />\r\n";
 	}
 	
 	/* Saves to disk for swapping purposes.  --Kris */
