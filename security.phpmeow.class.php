@@ -5,6 +5,8 @@ class phpmeow_security
 	/* Initializes session security data.  Inherit data from associated IP address, if applicable.  --Kris */
 	public function __construct()
 	{
+		require( "config.phpmeow.php" );
+		
 		if ( !isset( $_SESSION["phpmeow_attempts"] ) )
 		{
 			$_SESSION["phpmeow_attempts"] = 0;
@@ -12,15 +14,49 @@ class phpmeow_security
 			$_SESSION["phpmeow_last_attempt"] = 0;
 			$_SESSION["phpmeow_last_failed_attempt"] = 0;
 			$_SESSION["phpmeow_attempts_log"] = array();  // Indexed by timestamp, contains array of data.  --Kris
+			$_SESSION["phpmeow_banned"] = FALSE;
+			$_SESSION["phpmeow_ban_expiration"] = 0;
 		}
 		
-		// TODO - Load ipban
+		/* Populate session data with logs for current IP address, if applicable.  --Kris */
+		if ( $phpmeow_security_use_ip == TRUE )
+		{
+			$ipban_ini = self::load_ipban_config();
+			self::ipban_dump_to_session( $ipban_ini );
+		}
 	}
 	
 	/* Load ipban configuration file.  --Kris */
 	function load_ipban_config()
 	{
+		require( "config.phpmeow.php" );
 		
+		$ipban_ini = array();
+		$ipban_ini = parse_ini_file( "ipban.phpmeow.ini", TRUE );
+		
+		if ( $phpmeow_cur_time > $ipban_ini["Housekeeping"]["Cleaned"] + $phpmeow_security_ipban_cleanup_wait )
+		{
+			$ipban_ini = self::config_housekeeping( $ipban_ini );
+		}
+		
+		return $ipban_ini;
+	}
+	
+	/* Load ipban data into session (replace).  --Kris */
+	function ipban_dump_to_session( $ipban_ini )
+	{
+		
+	}
+	
+	/* Add session data into ipban (update).  --Kris */
+	function session_add_to_ipban( $pass, $ipban_ini = array() )
+	{
+		if ( empty( $ipban_ini ) )
+		{
+			$ipban_ini = self::load_ipban_config();
+		}
+		
+		// TODO - The crap that goes here.
 	}
 	
 	/* Clean-up outdated entries in ipban configuration file.  --Kris */
@@ -32,6 +68,8 @@ class phpmeow_security
 	/* Log an attempt, regardless of pass or fail.  --Kris */
 	function log_attempt( $pass )
 	{
+		require( "config.phpmeow.php" );
+		
 		$_SESSION["phpmeow_attempts"]++;
 		$_SESSION["phpmeow_last_attempt"] = $phpmeow_cur_time;
 		$_SESSION["phpmeow_attempts_log"][$phpmeow_cur_time] = array( "pass" => $pass );
@@ -39,6 +77,11 @@ class phpmeow_security
 		if ( $pass == FALSE )
 		{
 			self::track_failure();
+		}
+		
+		if ( $phpmeow_security_use_ip == TRUE )
+		{
+			self::session_add_to_ipban( $pass );
 		}
 	}
 	
