@@ -65,7 +65,7 @@ class phpmeow_security
 		/* Updated failed attempts.  This is NOT added to the session attempts log array!  --Kris */
 		if ( isset( $ipban_ini["Tracking"][$_SERVER["REMOTE_ADDR"]] ) )
 		{
-			$faildata = explode( $ipban_ini["Tracking"][$_SERVER["REMOTE_ADDR"]] );
+			$faildata = explode( ",", $ipban_ini["Tracking"][$_SERVER["REMOTE_ADDR"]] );
 			
 			$_SESSION["phpmeow_failed_attempts"] = $faildata[0];
 			$_SESSION["phpmeow_last_failed_attempt"] = $faildata[1];
