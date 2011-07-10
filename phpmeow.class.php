@@ -266,9 +266,14 @@ class phpmeow
 	/* Compares the POST data against the SESSION data and returns whether the user-selected boxes are correct.  --Kris */
 	function validate()
 	{
+		require( "security.phpmeow.class.php" );
+		
+		$security = new phpmeow_security();
+		
 		if ( !isset( $_POST ) || !isset( $_SESSION ) || !isset( $_SESSION["phpmeow_correct_blocks"] ) || !is_array( $_SESSION["phpmeow_correct_blocks"] ) 
 			|| empty( $_SESSION["phpmeow_correct_blocks"] ) )
 		{
+			$security->log_attempt( FALSE );
 			return FALSE;
 		}
 		
@@ -295,15 +300,18 @@ class phpmeow
 			
 			if ( ( $correct == TRUE && $postval != 1 ) || ( $correct == FALSE && $postval == 1 ) )
 			{
+				$security->log_attempt( FALSE );
 				return FALSE;
 			}
 		}
 		
 		if ( $selcount < 1 )
 		{
+			$security->log_attempt( FALSE );
 			return FALSE;
 		}
 		
+		$security->log_attempt( TRUE );
 		return TRUE;
 	}
 	

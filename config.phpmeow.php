@@ -85,5 +85,8 @@ require_once( "block.phpmeow.class.php" );
 require_once( "session.phpmeow.class.php" );
 require_once( "encryption.phpmeow.class.php" );
 
+/* To keep the security timestamps consistent, accounting for CPU delay mid-script.  --Kris */
+$phpmeow_cur_time = time();
+
 /* The phpMeow version number.  First non-empty master commit starts at 1.0, then increment by +0.1 with each subsequent master commit on GitHub.  --Kris */
 $phpmeow_version = "0.00a";
