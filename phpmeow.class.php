@@ -55,7 +55,7 @@ class phpmeow
 		$correct_blocks = self::get_correct_blocks();
 		
 		/* Store our session data for validation.  --Kris */
-		$_SESSION["correct_blocks"] = $correct_blocks;
+		$_SESSION["phpmeow_correct_blocks"] = $correct_blocks;
 		
 		/* Begin HTML generation.  --Kris */
 		print "\r\n<!-- Begin phpMeow code. -->\r\n";
@@ -266,8 +266,8 @@ class phpmeow
 	/* Compares the POST data against the SESSION data and returns whether the user-selected boxes are correct.  --Kris */
 	function validate()
 	{
-		if ( !isset( $_POST ) || !isset( $_SESSION ) || !isset( $_SESSION["correct_blocks"] ) || !is_array( $_SESSION["correct_blocks"] ) 
-			|| empty( $_SESSION["correct_blocks"] ) )
+		if ( !isset( $_POST ) || !isset( $_SESSION ) || !isset( $_SESSION["phpmeow_correct_blocks"] ) || !is_array( $_SESSION["phpmeow_correct_blocks"] ) 
+			|| empty( $_SESSION["phpmeow_correct_blocks"] ) )
 		{
 			return FALSE;
 		}
@@ -284,7 +284,7 @@ class phpmeow
 			$whichblock = substr( $postvar, 14, strlen( $postvar ) - 14 );
 			
 			$correct = FALSE;
-			foreach ( $_SESSION["correct_blocks"] as $correct_block )
+			foreach ( $_SESSION["phpmeow_correct_blocks"] as $correct_block )
 			{
 				if ( $whichblock == $correct_block )
 				{
