@@ -5,7 +5,10 @@ class phpmeow_security
 	/* Initializes session security data.  Inherit data from associated IP address, if applicable.  --Kris */
 	function initialize()
 	{
-		
+		if ( !isset( $_SESSION["phpmeow_attempts"] ) )
+		{
+			
+		}
 	}
 	
 	/* Load ipban configuration file.  --Kris */
