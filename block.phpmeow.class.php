@@ -213,7 +213,7 @@ class phpmeow_block
 		
 		$blockim = self::merge_animals( $ims );
 		
-		$block_key = "blockfile_" . $session->generate_sid( 20 );
+		$block_key = "phpmeow_blockfile_" . $session->generate_sid( 20 );
 		$_SESSION[$block_key] = "phpMeow_temp/" . $_SERVER["REMOTE_ADDR"] . "-" . $session->generate_sid() . ".jpg";
 		
 		self::save( $blockim, $_SESSION[$block_key] );
