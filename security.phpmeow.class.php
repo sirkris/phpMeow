@@ -9,12 +9,12 @@ class phpmeow_security
 		
 		if ( !isset( $_SESSION["phpmeow_attempts"] ) )
 		{
-			$_SESSION["phpmeow_attempts"] = 0;
+			$_SESSION["phpmeow_attempts"] = 0;  // Set, but currently unused.  --Kris
 			$_SESSION["phpmeow_failed_attempts"] = 0;
-			$_SESSION["phpmeow_last_attempt"] = 0;
+			$_SESSION["phpmeow_last_attempt"] = 0;  // Set, but currently unused.  --Kris
 			$_SESSION["phpmeow_last_failed_attempt"] = 0;
 			$_SESSION["phpmeow_attempts_log"] = array();  // Indexed by timestamp, contains array of data.  Excludes ipban inheritance!  --Kris
-			$_SESSION["phpmeow_banned"] = FALSE;
+			$_SESSION["phpmeow_banned"] = FALSE;  // If TRUE, phpMeow will display a message instead of blocks and fail on any POST attempt.  --Kris
 			$_SESSION["phpmeow_ban_expiration"] = 0;
 		}
 		
@@ -65,7 +65,10 @@ class phpmeow_security
 		/* Updated failed attempts.  This is NOT added to the session attempts log array!  --Kris */
 		if ( isset( $ipban_ini["Tracking"][$_SERVER["REMOTE_ADDR"]] ) )
 		{
+			$faildata = explode( $ipban_ini["Tracking"][$_SERVER["REMOTE_ADDR"]] );
 			
+			$_SESSION["phpmeow_failed_attempts"] = $faildata[0];
+			$_SESSION["phpmeow_last_failed_attempt"] = $faildata[1];
 		}
 	}
 	
