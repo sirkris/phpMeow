@@ -13,7 +13,7 @@ class phpmeow_security
 			$_SESSION["phpmeow_failed_attempts"] = 0;
 			$_SESSION["phpmeow_last_attempt"] = 0;
 			$_SESSION["phpmeow_last_failed_attempt"] = 0;
-			$_SESSION["phpmeow_attempts_log"] = array();  // Indexed by timestamp, contains array of data.  --Kris
+			$_SESSION["phpmeow_attempts_log"] = array();  // Indexed by timestamp, contains array of data.  Excludes ipban inheritance!  --Kris
 			$_SESSION["phpmeow_banned"] = FALSE;
 			$_SESSION["phpmeow_ban_expiration"] = 0;
 		}
@@ -45,7 +45,28 @@ class phpmeow_security
 	/* Load ipban data into session (replace).  --Kris */
 	function ipban_dump_to_session( $ipban_ini )
 	{
+		require( "config.phpmeow.php" );
 		
+		/* Check for temporary bans.  Ignore expired ones that haven't been cleaned-up yet.  --Kris */
+		if ( isset( $ipban_ini["Temporary"][$_SERVER["REMOTE_ADDR"]] ) 
+			&& $ipban_ini["Temporary"][$_SERVER["REMOTE_ADDR"]] > $phpmeow_cur_time )
+		{
+			$_SESSION["phpmeow_banned"] = TRUE;
+			$_SESSION["phpmeow_ban_expiration"] = $ipban_ini["Temporary"][$_SERVER["REMOTE_ADDR"]];
+		}
+		
+		/* Check for permanent bans.  The value is ignored.  --Kris */
+		if ( isset( $ipban_ini["Permanent"][$_SERVER["REMOTE_ADDR"]] ) )
+		{
+			$_SESSION["phpmeow_banned"] = TRUE;
+			$_SESSION["phpmeow_ban_expiration"] = 0;
+		}
+		
+		/* Updated failed attempts.  This is NOT added to the session attempts log array!  --Kris */
+		if ( isset( $ipban_ini["Tracking"][$_SERVER["REMOTE_ADDR"]] ) )
+		{
+			
+		}
 	}
 	
 	/* Add session data into ipban (update).  --Kris */
