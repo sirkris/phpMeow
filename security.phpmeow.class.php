@@ -16,6 +16,8 @@ class phpmeow_security
 			$_SESSION["phpmeow_attempts_log"] = array();  // Indexed by timestamp, contains array of data.  Excludes ipban inheritance!  --Kris
 			$_SESSION["phpmeow_banned"] = FALSE;  // If TRUE, phpMeow will display a message instead of blocks and fail on any POST attempt.  --Kris
 			$_SESSION["phpmeow_ban_expiration"] = 0;
+			$_SESSION["phpmeow_probation"] = FALSE;
+			$_SESSION["phpmeow_probation_expiration"] = 0;
 		}
 		
 		/* Populate session data with logs for current IP address, if applicable.  --Kris */
@@ -23,6 +25,21 @@ class phpmeow_security
 		{
 			$ipban_ini = self::load_ipban_config();
 			self::ipban_dump_to_session( $ipban_ini );
+		}
+		
+		/* Handle any expired bans/probations.  --Kris */
+		if ( $_SESSION["phpmeow_ban_expiration"] <= $phpmeow_cur_time 
+			&& $_SESSION["phpmeow_ban_expiration"] > 0 )
+		{
+			$_SESSION["phpmeow_banned"] = FALSE;
+			$_SESSION["phpmeow_ban_expiration"] = 0;
+		}
+		
+		if ( $_SESSION["phpmeow_probation_expiration"] <= $phpmeow_cur_time 
+			&& $_SESSION["phpmeow_probation_expiration"] > 0 )
+		{
+			$_SESSION["phpmeow_probation"] = FALSE;
+			$_SESSION["phpmeow_probation_expiration"] = 0;
 		}
 	}
 	
@@ -206,9 +223,69 @@ class phpmeow_security
 	/* Track a failed attempt and react accordingly.  --Kris */
 	function track_failure()
 	{
+		require( "config.phpmeow.php" );
+		
 		$_SESSION["phpmeow_failed_attempts"]++;
 		$_SESSION["phpmeow_last_failed_attempt"] = $phpmeow_cur_time;
 		
-		// TODO - ipban stuff, react
+		/* If a permanent ban is in place, leave so the expiration won't be set to temporary.  --Kris */
+		if ( $_SESSION["phpmeow_banned"] == TRUE 
+			&& $_SESSION["phpmeow_ban_expiration"] == 0 )
+		{
+			return;
+		}
+		
+		/* If user is already in probation and/or banned, trigger an automatic 1-hour lockout and reset the probation to 24 hours.  --Kris */
+		if ( $_SESSION["phpmeow_probation"] == TRUE 
+			|| $_SESSION["phpmeow_banned"] == TRUE )
+		{
+			$_SESSION["phpmeow_banned"] = TRUE;
+			$_SESSION["phpmeow_ban_expiration"] = $phpmeow_cur_time + pow( 60, 2 );
+			$_SESSION["phpmeow_probation"] = TRUE;
+			$_SESSION["phpmeow_probation_expiration"] = $phpmeow_cur_time + (pow( 60, 2 ) * 24);
+		}
+		/* Frequent failures in a certain timeframe will trigger an automatic 5-minute ban.  Designed to catch robots, not people.  --Kris */
+		else
+		{
+			$failures = array();  // Failures[(time period in seconds)] = (number of failures in that time period)
+			$failures[5] = 0;
+			$failures[15] = 0;
+			$failures[20] = 0;
+			$failures[300] = 0;
+			
+			/* Number of failures for each period that will trigger a lockout.  Feel free to tweak to your liking.  Must match failures array keys!  --Kris */
+			$lockout = array();
+			$lockout[5] = 2;
+			$lockout[15] = 3;
+			$lockout[20] = 4;
+			$lockout[300] = 5;
+			
+			/* Collect our stats.  --Kris */
+			foreach ( $_SESSION["phpmeow_attempts_log"] as $timestamp => $logdata )
+			{
+				if ( $logdata["pass"] == FALSE )
+				{
+					foreach ( $failures as $failkey => $ignore )
+					{
+						if ( $timestamp >= $phpmeow_cur_time - $failkey )
+						{
+							$failures[$failkey]++;
+						}
+					}
+				}
+			}
+			
+			/* Compare our stats with the lockout rules.  If any match, trigger a 5-minute lockout (ban).  --Kris */
+			foreach ( $lockout as $seconds => $limit )
+			{
+				if ( $failures[$seconds] >= $limit )
+				{
+					$_SESSION["phpmeow_banned"] = TRUE;
+					$_SESSION["phpmeow_ban_expiration"] = $phpmeow_cur_time + 300;
+					
+					break;
+				}
+			}
+		}
 	}
 }

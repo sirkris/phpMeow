@@ -266,9 +266,23 @@ class phpmeow
 	/* Compares the POST data against the SESSION data and returns whether the user-selected boxes are correct.  --Kris */
 	function validate()
 	{
-		require( "security.phpmeow.class.php" );
+		require( "config.phpmeow.php" );
 		
 		$security = new phpmeow_security();
+		
+		/* If ban is already in place, reset ban expiration to 1 hour with 24-hour probation.  Do not waste resources logging the attempt.  --Kris */
+		if ( $_SESSION["phpmeow_banned"] == TRUE )
+		{
+			/* Don't bother with permanent bans.  --Kris */
+			if ( $_SESSION["phpmeow_ban_expiration"] > 0 )
+			{
+				$_SESSION["phpmeow_ban_expiration"] = $phpmeow_cur_time + pow( 60, 2 );
+				$_SESSION["phpmeow_probation"] = TRUE;
+				$_SESSION["phpmeow_probation_expiration"] = $phpmeow_cur_time + (pow( 60, 2 ) * 24);
+			}
+			
+			return FALSE;
+		}
 		
 		if ( !isset( $_POST ) || !isset( $_SESSION ) || !isset( $_SESSION["phpmeow_correct_blocks"] ) || !is_array( $_SESSION["phpmeow_correct_blocks"] ) 
 			|| empty( $_SESSION["phpmeow_correct_blocks"] ) )
