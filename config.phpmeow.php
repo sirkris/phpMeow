@@ -48,7 +48,7 @@ $phpmeow_blocks_y = 2;
 $phpmeow_padding_x = 30;
 $phpmeow_padding_y = 30;
 
-/* Password encryption method.  --Kris */
+/* Encryption method.  --Kris */
 $phpmeow_enchash = "sha512";  // Currently supported:  md5, sha1, sha256, sha512
 
 /* Set to FALSE if you don't want the option of overriding any of the variables in this config file (only applies to phpmeow class).  --Kris */
@@ -67,9 +67,6 @@ $phpmeow_security_enable = TRUE;
 /* Sets whether security functions will cross-reference IP address with session.  Enable only if session-based tracking isn't stopping a bot attack.  --Kris */
 $phpmeow_security_use_ip = FALSE;
 
-/* If your site is under a bot attack, enable this to auto-ban troublesome IP addresses.  Use at your own risk.  --Kris */
-$phpmeow_security_autoban_ip = FALSE;
-
 /* Determines the MINIMUM time (in seconds) between cleanings of ipban.phpmeow.ini.  --Kris */
 $phpmeow_security_ipban_cleanup_wait = 300;
 
@@ -87,6 +84,7 @@ require_once( "animal.phpmeow.class.php" );
 require_once( "block.phpmeow.class.php" );
 require_once( "session.phpmeow.class.php" );
 require_once( "encryption.phpmeow.class.php" );
+require_once( "security.phpmeow.class.php" );
 
 /* To keep the security timestamps consistent, accounting for CPU delay mid-script.  --Kris */
 $phpmeow_cur_time = time();
