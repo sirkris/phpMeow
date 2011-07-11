@@ -7,6 +7,11 @@ class phpmeow_security
 	{
 		require( "config.phpmeow.php" );
 		
+		if ( $phpmeow_security_enable == FALSE )
+		{
+			return;
+		}
+		
 		if ( !isset( $_SESSION["phpmeow_attempts"] ) )
 		{
 			$_SESSION["phpmeow_attempts"] = 0;  // Set, but currently unused.  --Kris
@@ -124,9 +129,9 @@ class phpmeow_security
 	/* Save INI file.  Preserve section names and comments, populate the rest from array.  --Kris */
 	function save_to_ini( $ipban_ini )
 	{
-		$ini_old = explode( "\r\n", file_get_contents( "ipban.phpmeow.ini" ) );
+		$ini_old = explode( "\r\n", trim( file_get_contents( "ipban.phpmeow.ini" ) ) );
 		
-		if ( !( $file = fopen( "ipban.phpmeow.ini", w ) ) )
+		if ( !( $file = fopen( "ipban.phpmeow.ini", "w" ) ) )
 		{
 			return FALSE;
 		}
@@ -139,11 +144,16 @@ class phpmeow_security
 			$skip = FALSE;
 			for ( $saltloop = 0; $saltloop < strlen( $skipsalt ); $saltloop++ )
 			{
-				if ( strcasecmp( $ini_old_line{0}, $skipsalt{$saltloop} ) == 0 )
+				if ( strcasecmp( substr( $ini_old_line, 0, 1 ), substr( $skipsalt, $saltloop, 1 ) ) == 0 )
 				{
 					$skip = TRUE;
 					break;
 				}
+			}
+			
+			if ( $skip == TRUE )
+			{
+				continue;
 			}
 			
 			fputs( $file, $ini_old_line . "\r\n" );
@@ -204,6 +214,11 @@ class phpmeow_security
 	function log_attempt( $pass )
 	{
 		require( "config.phpmeow.php" );
+		
+		if ( $phpmeow_security_enable == FALSE )
+		{
+			return;
+		}
 		
 		$_SESSION["phpmeow_attempts"]++;
 		$_SESSION["phpmeow_last_attempt"] = $phpmeow_cur_time;
