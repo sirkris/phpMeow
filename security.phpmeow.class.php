@@ -287,5 +287,11 @@ class phpmeow_security
 				}
 			}
 		}
+		
+		/* Sleep a bit before sending a response, if enabled.  --Kris */
+		if ( $phpmeow_security_failure_wait > 0 )
+		{
+			sleep( $phpmeow_security_failure_wait );
+		}
 	}
 }

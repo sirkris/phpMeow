@@ -73,6 +73,9 @@ $phpmeow_security_autoban_ip = FALSE;
 /* Determines the MINIMUM time (in seconds) between cleanings of ipban.phpmeow.ini.  --Kris */
 $phpmeow_security_ipban_cleanup_wait = 300;
 
+/* If you want to make the user wait a few seconds after a failed attempt to deter BFG bots, set this to any value (in seconds) greater than 0.  --Kris */
+$phpmeow_security_failure_wait = 0;
+
 /*
  * XXXX ---- Do not edit below this line! ---- XXXX
  */
