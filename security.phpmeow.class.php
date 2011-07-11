@@ -7,6 +7,11 @@ class phpmeow_security
 	{
 		require( "config.phpmeow.php" );
 		
+		if ( $phpmeow_security_enable == FALSE )
+		{
+			return;
+		}
+		
 		if ( !isset( $_SESSION["phpmeow_attempts"] ) )
 		{
 			$_SESSION["phpmeow_attempts"] = 0;  // Set, but currently unused.  --Kris
@@ -204,6 +209,11 @@ class phpmeow_security
 	function log_attempt( $pass )
 	{
 		require( "config.phpmeow.php" );
+		
+		if ( $phpmeow_security_enable == FALSE )
+		{
+			return;
+		}
 		
 		$_SESSION["phpmeow_attempts"]++;
 		$_SESSION["phpmeow_last_attempt"] = $phpmeow_cur_time;
