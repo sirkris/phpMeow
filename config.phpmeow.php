@@ -90,4 +90,4 @@ require_once( "security.phpmeow.class.php" );
 $phpmeow_cur_time = time();
 
 /* The phpMeow version number.  First non-empty master commit starts at 1.0, then increment by +0.1 with each subsequent master commit on GitHub.  --Kris */
-$phpmeow_version = "0.00a";
+$phpmeow_version = "1.00b";
