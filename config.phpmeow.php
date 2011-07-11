@@ -61,6 +61,20 @@ $phpmeow_singular["fish"] = "fish";
 $phpmeow_singular["kittens"] = "kitten";
 $phpmeow_singular["puppies"] = "puppy";
 
+/* STRONGLY RECOMMENDED that you leave this enabled!  Otherwise, you will have little protection against bots using BFG to get through.  --Kris */
+$phpmeow_security_enable = TRUE;
+
+/* Sets whether security functions will cross-reference IP address with session.  Enable only if session-based tracking isn't stopping a bot attack.  --Kris */
+$phpmeow_security_use_ip = FALSE;
+
+/* If your site is under a bot attack, enable this to auto-ban troublesome IP addresses.  Use at your own risk.  --Kris */
+$phpmeow_security_autoban_ip = FALSE;
+
+/* Determines the MINIMUM time (in seconds) between cleanings of ipban.phpmeow.ini.  --Kris */
+$phpmeow_security_ipban_cleanup_wait = 300;
+
+/* If you want to make the user wait a few seconds after a failed attempt to deter BFG bots, set this to any value (in seconds) greater than 0.  --Kris */
+$phpmeow_security_failure_wait = 0;
 
 /*
  * XXXX ---- Do not edit below this line! ---- XXXX
@@ -73,6 +87,9 @@ require_once( "animal.phpmeow.class.php" );
 require_once( "block.phpmeow.class.php" );
 require_once( "session.phpmeow.class.php" );
 require_once( "encryption.phpmeow.class.php" );
+
+/* To keep the security timestamps consistent, accounting for CPU delay mid-script.  --Kris */
+$phpmeow_cur_time = time();
 
 /* The phpMeow version number.  First non-empty master commit starts at 1.0, then increment by +0.1 with each subsequent master commit on GitHub.  --Kris */
 $phpmeow_version = "0.00a";
