@@ -129,7 +129,7 @@ class phpmeow_security
 	/* Save INI file.  Preserve section names and comments, populate the rest from array.  --Kris */
 	function save_to_ini( $ipban_ini )
 	{
-		$ini_old = explode( "\r\n", file_get_contents( "ipban.phpmeow.ini" ) );
+		$ini_old = explode( "\r\n", trim( file_get_contents( "ipban.phpmeow.ini" ) ) );
 		
 		if ( !( $file = fopen( "ipban.phpmeow.ini", "w" ) ) )
 		{
