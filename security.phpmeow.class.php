@@ -131,7 +131,7 @@ class phpmeow_security
 	{
 		$ini_old = explode( "\r\n", file_get_contents( "ipban.phpmeow.ini" ) );
 		
-		if ( !( $file = fopen( "ipban.phpmeow.ini", w ) ) )
+		if ( !( $file = fopen( "ipban.phpmeow.ini", "w" ) ) )
 		{
 			return FALSE;
 		}
@@ -144,11 +144,16 @@ class phpmeow_security
 			$skip = FALSE;
 			for ( $saltloop = 0; $saltloop < strlen( $skipsalt ); $saltloop++ )
 			{
-				if ( strcasecmp( $ini_old_line{0}, $skipsalt{$saltloop} ) == 0 )
+				if ( strcasecmp( substr( $ini_old_line, 0, 1 ), substr( $skipsalt, $saltloop, 1 ) ) == 0 )
 				{
 					$skip = TRUE;
 					break;
 				}
+			}
+			
+			if ( $skip == TRUE )
+			{
+				continue;
 			}
 			
 			fputs( $file, $ini_old_line . "\r\n" );
