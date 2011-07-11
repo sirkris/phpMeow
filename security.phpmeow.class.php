@@ -83,6 +83,51 @@ class phpmeow_security
 		// TODO - The crap that goes here.
 	}
 	
+	/* Save INI file.  Preserve section names and comments, populate the rest from array.  --Kris */
+	function save_to_ini( $ipban_ini )
+	{
+		$ini_old = explode( "\r\n", file_get_contents( "ipban.phpmeow.ini" ) );
+		
+		if ( !( $file = fopen( "ipban.phpmeow.ini", w ) ) )
+		{
+			return FALSE;
+		}
+		
+		/* If first character is any of these, skip.  --Kris */
+		$skipsalt = "abcdefghijklmnopqrstuvwxyz1234567890";
+		
+		foreach ( $ini_old as $ini_old_line )
+		{
+			$skip = FALSE;
+			for ( $saltloop = 0; $saltloop < strlen( $skipsalt ); $saltloop++ )
+			{
+				if ( strcasecmp( $ini_old_line{0}, $skipsalt{$saltloop} ) == 0 )
+				{
+					$skip = TRUE;
+					break;
+				}
+			}
+			
+			fputs( $file, $ini_old_line . "\r\n" );
+			
+			/* If it's a section header, output the data for that section.  --Kris */
+			if ( strcmp( $ini_old_line{0}, "[" ) == 0 
+				&& strcmp( $ini_old_line{strlen( $ini_old_line ) - 1}, "]" ) == 0 )
+			{
+				$section = substr( $ini_old_line, 1, strlen( $ini_old_line ) - 2 );
+				
+				foreach ( $ipban_ini[$section] as $var => $val )
+				{
+					fputs( $file, $var . " = " . $val . "\r\n" );
+				}
+			}
+		}
+		
+		fclose( $file );
+		
+		return TRUE;
+	}
+	
 	/* Clean-up outdated entries in ipban configuration file.  --Kris */
 	function config_housekeeping()
 	{
