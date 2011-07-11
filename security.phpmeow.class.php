@@ -72,15 +72,36 @@ class phpmeow_security
 		}
 	}
 	
-	/* Add session data into ipban (update).  --Kris */
-	function session_add_to_ipban( $pass, $ipban_ini = array() )
+	/* Add session data into ipban (replace).  --Kris */
+	function session_add_to_ipban( $ipban_ini = array(), $save = TRUE )
 	{
 		if ( empty( $ipban_ini ) )
 		{
 			$ipban_ini = self::load_ipban_config();
 		}
 		
-		// TODO - The crap that goes here.
+		if ( $_SESSION["phpmeow_banned"] == TRUE )
+		{
+			if ( $_SESSION["phpmeow_ban_expiration"] == 0 )
+			{
+				$ipban_ini["Permanent"][$_SERVER["REMOTE_ADDR"]] = 0;
+			}
+			else
+			{
+				$ipban_ini["Temporary"][$_SERVER["REMOTE_ADDR"]] = $_SESSION["phpmeow_ban_expiration"];
+			}
+		}
+		
+		$ipban_ini["Tracking"][$_SERVER["REMOTE_ADDR"]] = $_SESSION["phpmeow_failed_attempts"] . "," . $_SESSION["phpmeow_last_failed_attempt"];
+		
+		if ( $save == TRUE )
+		{
+			return self::save_to_ini( $ipban_ini );
+		}
+		else
+		{
+			return TRUE;
+		}
 	}
 	
 	/* Save INI file.  Preserve section names and comments, populate the rest from array.  --Kris */
@@ -150,7 +171,7 @@ class phpmeow_security
 		
 		if ( $phpmeow_security_use_ip == TRUE )
 		{
-			self::session_add_to_ipban( $pass );
+			self::session_add_to_ipban();
 		}
 	}
 	
