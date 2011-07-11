@@ -150,9 +150,37 @@ class phpmeow_security
 	}
 	
 	/* Clean-up outdated entries in ipban configuration file.  --Kris */
-	function config_housekeeping()
+	function config_housekeeping( $ipban_ini = array() )
 	{
+		require( "config.phpmeow.php" );
 		
+		if ( empty( $ipban_ini ) )
+		{
+			$ipban_ini = self::load_ipban_config();
+		}
+		
+		$ipban_ini_new = array();
+		foreach ( $ipban_ini as $section => $sectiondata )
+		{
+			if ( strcmp( $section, "Temporary" ) == 0 )
+			{
+				foreach ( $sectiondata as $bannedip => $banexp )
+				{
+					if ( $phpmeow_cur_time < $banexp )
+					{
+						$ipban_ini_new[$section][$bannedip] = $banexp;
+					}
+				}
+			}
+			else
+			{
+				$ipban_ini_new[$section] = $sectiondata;
+			}
+		}
+		
+		$ipban_ini_new["Housekeeping"]["Cleaned"] = $phpmeow_cur_time;
+		
+		return $ipban_ini_new;
 	}
 	
 	/* Log an attempt, regardless of pass or fail.  --Kris */
