@@ -1,0 +1,139 @@
+phpMeow - A Cute and Fluffy Alternative to CAPTCHA
+---------------------------------------------------
+
+1. Introduction
+
+phpMeow is a fully-functional PHP implementation of KittenAuth, 
+a previously hypothetical alternative first conceived by 
+an individual going by the name of "Oli."
+
+In CAPTCHA, a user is presented with an image that typically 
+contains letters and numbers.  The user is instructed to 
+type these characters into a text box to prove they're not a 
+bot.  However, as bot algorithms become better and better at 
+interpreting the characters within these images, CAPTCHA 
+developers respond by distorting the characters more and more.
+Now, it's reached the point where even humans are barely able 
+to read them, resulting in considerable frustration on the 
+part of the end-user.
+
+KittenAuth was conceived as an alternative approach.  Instead 
+of typing letters seen in an image, the user is tasked with 
+identifying which of a series of images contains a picture of 
+a kitten.  The premise is that, while alpha-numeric characters 
+are relatively easy for a bot to identify, identifying a species 
+of animal in a photo is much more difficult.
+
+phpMeow follows the KittenAuth premise with a few improvements 
+of my own.  Specifically, there are also puppies, fish, and 
+birds you're randomly prompted to identify.  In addition, there 
+are also "junk" images designed to confuse bots.  I also set it 
+up so that each selectable "block" is a composite of four images, 
+each one being a different animal or junk.  The user is given a 
+random prompting to select (i.e. Select all blocks that contain 
+2 kittens and 1 bird).  In addition, there are also a number of 
+random distortions applies to the rendered images, designed to 
+further confuse the evil robots.
+
+The only potential weakness in this concept is that the answer 
+is much easier to randomly guess than CAPTCHA.  I solved this 
+problem by creating an extensive security class to catch BFG 
+attacks without nabbing innocent humans in the process.  Though 
+it's technically possible that a bot could guess the right 
+combination once, the odds are stacked against it.  In other words, 
+even if the bot gets one through, which is unlikely to begin with, 
+it would end up getting locked-out before it could do any real 
+damage.
+
+It's important to remember that this isn't a password form.  The 
+reason people imploy bots is so that they can make automated form 
+submissions in bulk.  phpMeow makes it prohibitively difficult 
+for a bot to get anything through, to the point where it would be 
+faster for the spammer to kill the bot and have a human do it 
+instead.  
+
+Therefore, it's reasonable to conclude that phpMeow will be just as 
+effective-- if not more effective-- than CAPTCHA at taking the bot 
+out of the picture.  That just leaves you with the human to deal with.  
+You're welcome.  =)
+
+
+2. Background
+
+I first discovered KittenAuth while doing a Google search for 
+an alternative to CAPTCHA that I could use in a separate 
+project I'm working on called phpLogin.  I read Oli's article 
+outlining the premise and was very impressed.  But to my dismay, 
+there was no download link to be found.  Apparently, it was only 
+a concept article.
+
+I searched for hours to find a working implementation of it.  
+There were none.  I found a few small code snippets that claimed to 
+be proofs of concept, but they were far too rudimentary to be of 
+any use in a production environment.  So I decided to write my own.
+
+As far as I know, phpMeow is the first full implementation of 
+KittenAuth.  Or at very least, it's the only one available for 
+download.
+
+
+3. Interoperability
+
+I designed phpMeow to be extremely portable.  All the included 
+variables are uniquely-named (prefixed with "phpmeow_") to 
+prevent the possibility of naming conflicts with whatever 
+implementation you choose to use this with.  No database required.  
+phpMeow does require PHP >= 5.2.x and the GD2 library.  It'll 
+also need to have disk I/O access permissions granted.  phpMeow 
+relies heavily on sessions, though it does support tracking 
+IP addresses as well (disabled by default).
+
+phpMeow has been successfully tested on both Windows and Linux.
+
+
+4. Installation
+
+Easy!  Place all these files in your script's working directory 
+(or you can put it elsewhere if you set the path accordingly).  
+
+Then, place this code somewhere near the bottom of your form, 
+ABOVE the closing form tab:
+
+require( "phpmeow.class.php" );
+
+$phpmeow = new phpmeow();
+$phpmeow->main();
+
+
+That's it!  Refer to sample.phpmeow.php to see it in action.  
+However, I would strongly recommend you use the example in 
+sample2.phpmeow.php instead!  It just looks better.  I tried 
+to make the div positioning as flexible as possible; again, 
+refer to those two sample scripts for details.
+
+That's the first half.  The second half is the confirmation 
+code, which goes in the script that your form is pointing 
+to in its "action=" parameter.  It should be placed at or 
+near the top of that script, as it will use a header 
+redirect to send the user back to the form if they answered 
+incorrectly.
+
+Refer to sample.confirm.phpmeow.php for details.
+
+
+5. Project Information
+
+This project is maintained on Github.  Here's the URL:
+
+http://www.github.com/sirkris/phpmeow
+
+
+If you have any questions/concerns/feedback/etc, or if you'd 
+like to lend a hand, please feel free to contact me directly.  
+You can email me at:  kriscraig@php.net
+
+
+Thank you!  I hope you enjoy it.
+
+All hail our cruel feline overlords!  
+May death come swiftly to their enemies.
