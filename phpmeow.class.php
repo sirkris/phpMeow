@@ -85,7 +85,7 @@ class phpmeow
 		}
 		else
 		{
-			print "<b style=\"color: navy\">To prove you're not a robot, please click <i>all</i> blocks that contain </b>";
+			print "<b style=\"color: navy; font-size: 10pt\">To prove you're not a robot, please click <i>all</i> blocks that contain </b>";
 			
 			$checklist = array();
 			foreach ( $required as $rkey => $reqs )
