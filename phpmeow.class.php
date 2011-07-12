@@ -119,7 +119,7 @@ class phpmeow
 				$requirements .= $req;
 			}
 			
-			print "<b style=\"color: red\">" . $requirements . "</b>.\r\n";
+			print "<b style=\"color: red; font-size: 10pt\">" . $requirements . "</b>.\r\n";
 		}
 		
 		print "</div>\r\n";
