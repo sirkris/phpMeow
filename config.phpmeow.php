@@ -13,28 +13,28 @@
  * 
  * --Kris
  */
-$phpmeow_animal_width = 75;
-$phpmeow_animal_height = 75;
+$phpmeow_animal_width = 80;
+$phpmeow_animal_height = 80;
 
 /* Directory containing the phpMeow images.  --Kris */
 $phpmeow_animalsdir = "phpMeow_images";
 
 /* Feel free to tweak these to your liking.  Represents number of random dots/lines.  --Kris */
 $phpmeow_min_static = 2;
-$phpmeow_max_static = 5;
+$phpmeow_max_static = 4;
 
 /* How long can each static line be.  Minimum is 0 (a dot).  --Kris */
-$phpmeow_static_max_length = 10;
+$phpmeow_static_max_length = 7;
 
 /* The higher the tint max, the more discoloration there can be.  --Kris */
 $phpmeow_tint_max = 50;
 
 /* Probabilities.  The integer setting represents the divisor.  Ex:  A "3" for tint means there's a 1 in 3 chance of tinting being done on each image.  --Kris */
-$phpmeow_tint_probability = 3;
+$phpmeow_tint_probability = 2;
 
-$phpmeow_sketch_probability = 5;
+$phpmeow_sketch_probability = 35;
 
-$phpmeow_negative_probability = 20;
+$phpmeow_negative_probability = 25;
 
 $phpmeow_blur_probability = 3;
 
