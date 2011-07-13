@@ -54,7 +54,7 @@ useless in the long-run.</span>
 <br />
 <b style="color: blue">A. </b><span style="color: navy">Where CAPTCHA uses letters and numbers, phpMeow uses pictures of kittens and other 
 animals to test your humanity.  Obviously, since your keyboard lacks "kitten" and "puppy" keys 
-(though wouldn't that be awesome?", you can't type in the answer.  Instead, phpMeow prompts 
+(though wouldn't that be awesome?), you can't type in the answer.  Instead, phpMeow prompts 
 you to click the composite image blocks that match a certain requirement.  For example, 
 "Click all the blocks that contain 2 kittens and 1 bird."</span>
 
