@@ -262,19 +262,6 @@ class phpmeow_security
 		/* Frequent failures in a certain timeframe will trigger an automatic 5-minute ban.  Designed to catch robots, not people.  --Kris */
 		else
 		{
-			$failures = array();  // Failures[(time period in seconds)] = (number of failures in that time period)
-			$failures[5] = 0;
-			$failures[15] = 0;
-			$failures[20] = 0;
-			$failures[300] = 0;
-			$failures[600] = 0;
-			$failures[1800] = 0;
-			$failures[3600] = 0;
-			$failures[7200] = 0;
-			$failures[14400] = 0;
-			$failures[28800] = 0;
-			$failures[86400] = 0;
-			
 			/* Number of failures for each period that will trigger a lockout.  Feel free to tweak to your liking.  Must match failures array keys!  --Kris */
 			$lockout = array();
 			$lockout[5] = 2;
@@ -288,6 +275,13 @@ class phpmeow_security
 			$lockout[14400] = 10;
 			$lockout[28800] = 11;
 			$lockout[86400] = 12;
+			
+			/* Initialize failures array.  --Kris */
+			$failures = array();
+			foreach ( $lockout as $lkey => $ignore )
+			{
+				$failures[$lkey] = 0;
+			}
 			
 			/* Collect our stats.  --Kris */
 			foreach ( $_SESSION["phpmeow_attempts_log"] as $timestamp => $logdata )
