@@ -100,7 +100,7 @@ with the user's IP address, preventing this sort of spoofing from succeeding.</s
 <b style="color: red">Q. </b><b style="color: darkred">If these robots can break CAPTCHA, couldn't they do the same with phpMeow?</b>
 <br />
 <b style="color: blue">A. </b><span style="color: navy">Not currently, no.  Alpha-numeric characters-- even distorted ones-- are a lot more consistent and easy 
-to identify than a photo of an animal.  phpMeow also randomly varies the size of each block and imploys other 
+to identify than a photo of an animal.  phpMeow also randomly varies the size of each image within the block and imploys other 
 image effects to prevent a bot from identifying a pattern.  However, it should still be relatively easy for a human 
 to tell a kitten from a fish and a puppy from a bird.</span>
 
