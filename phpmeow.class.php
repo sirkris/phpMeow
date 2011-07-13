@@ -75,7 +75,8 @@ class phpmeow
 		
 		print "<div style=\"width: 92%; margin: auto; background-color: #DEDEFF; border: 1px solid black\">\r\n";
 		
-		print "<b style=\"color: blue\">KittenAuth</b><br />";
+		print "<b style=\"color: blue\">KittenAuth<sup><a href=\"#\" onClick=\"phpmeow_openwindow( 'phpmeow_faq.php', 'FAQ' );\">";
+		print "[?]</a></sup></b><br />";
 		
 		/* If a legitimate human ever sees this lockout message, the rules probably need to be tweaked.  --Kris */
 		if ( $_SESSION["phpmeow_banned"] == TRUE )

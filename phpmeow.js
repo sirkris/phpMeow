@@ -12,3 +12,11 @@ function phpmeow_selblock( div )
 		infield.value = 0;
 	}
 }
+
+function phpmeow_openwindow( url, title )
+{
+	var windowname = "phpMeow - " + title;
+	
+	thiswindow = window.open( url, windowname, "status=0,toolbar=0,location=0,menubar=0,directories=0,resizable=1,scrollbars=1,height=600,width=800" );
+	thiswindow.moveTo( 100, 50 );
+}
