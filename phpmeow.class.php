@@ -75,7 +75,7 @@ class phpmeow
 		
 		print "<div style=\"width: 92%; margin: auto; background-color: #DEDEFF; border: 1px solid black\">\r\n";
 		
-		print "<b style=\"color: blue\">KittenAuth<sup><a href=\"#\" onClick=\"phpmeow_openwindow( 'phpmeow_faq.php', 'FAQ' );\">";
+		print "<b style=\"color: blue\">KittenAuth<sup class=\"phpmeow_faqlink\"><a href=\"#\" onClick=\"phpmeow_openwindow( 'phpmeow_faq.php', 'FAQ' );\">";
 		print "[?]</a></sup></b><br />";
 		
 		/* If a legitimate human ever sees this lockout message, the rules probably need to be tweaked.  --Kris */
@@ -153,7 +153,7 @@ class phpmeow
 		}
 		
 		print "<div style=\"position: absolute; left: 0px; top: " . ($totalheight + 50) . "px; width: " . $totalwidth . "px; text-align: center\">\r\n";
-		print "<span class=\"credit\">";
+		print "<span class=\"phpmeow_credit\">";
 		print "Powered by phpMeow v" . $phpmeow_version . ".&nbsp; ";
 		print "Created by <a href=\"http://www.facebook.com/Kris.Craig\" target=\"_blank\">Kris Craig</a>.";
 		print "</span>\r\n";
