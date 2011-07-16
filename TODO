@@ -1,0 +1,32 @@
+phpMeow - Upcoming Features!
+-----------------------------
+
+phpMeow currently relies on session handling, with an IP tarpit as a backup, to deal with bots.  Unfortunately, this does not address the 
+threat of a massive botnet (e.g. 1+ million separate bots worldwide) being targeted at the form.  Though this scenario is EXTREMELY unlikely 
+for most site admins, it is nonetheless a vulnerability that I don't intend to ignore.  Though it's worth noting that even CAPTCHA systems 
+cannot completely thwart a botnet attack, "thinning the herd" so that at least most botnets could be resisted is a realistic goal.  There's 
+no question that image verification systems will one day become obsolete, but that day hasn't come quite yet.  So for now, my goal is to 
+make it prohibitively difficult for any botnet to force its way through phpMeow.  Since a botnet is immune to the multi-failure bans currently 
+in place to trap individual bots, we need to do two things:  Make the odds of a correct guess extremely low and implement traps and other 
+measures to confuse the bots into triggering a failure.
+
+After discussing ideas within the PHP community, as well as brainstorming some ideas of my own, I've come up with a list of improvements that 
+will be included in the next release (1.1):
+
+*Create an option to have a user select individual photo squares instead of an entire block.  For example, "Click on every photo of a bird."
+Or, perhaps to make it less annoying to the end-user, "Click on at least 5 photos of a kitten."  This approach would multiply the bit security 
+by a factor of 4, which would make it considerably more difficult for a botnet to break through.  This could be a toggleable feature, or 
+something that automatically kicks-in if there's a sudden surge in failures from different sources, or some combination of the two.
+
+*Add text fields that are made invisible via CSS, designed to trick a bot into populating them.  If these are not all left blank, phpMeow 
+regards it as a confirmed bot and results in an automatic failure.  In addition, it triggers the 1-hour ban (which may or may not make 
+a difference, depending on the botnet).
+
+*Create PHP-generated JavaScript code that designated a random number from a wide range for each block (or box) to be selected.  This, 
+instead of the current "1", will be considered the "selected" value.  Any value other than that, "0", or NULL will result in automatic 
+failure and 1-hour ban.  The JavaScript code should be nightmarishly convoluted, preferably randomly formulated by PHP to avoid pattern 
+detection; but not so complex that it causes the typical web browser to lag.  This will make it so that a bot would have to come fully 
+equipped with a JScript interpreter in order to even render a guess.
+
+
+These 3 things should make phpMeow able to hold its own against any CAPTCHA implementation when tested against a botnet.

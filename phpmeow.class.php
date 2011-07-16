@@ -1,5 +1,19 @@
 <?php
 
+/*
+ * phpMeow - A Cute and Fuzzy Alternative to CAPTCHA
+ * Created by Kris Craig.  April - July, 2011.
+ * 
+ * phpMeow is the first fully-functional, secure 
+ * implementation of KittenAuth in PHP.
+ * 
+ * This software is open-source and you're free to 
+ * use and/or distribute it as you see fit.  See 
+ * LICENSE file for more information.
+ * 
+ * Get the latest version at:  http://www.github.com/sirkris/phpmeow
+ */
+
 class phpmeow
 {
 	/* Each arg must be an array in $varname => $value format.  --Kris */
@@ -75,7 +89,8 @@ class phpmeow
 		
 		print "<div style=\"width: 92%; margin: auto; background-color: #DEDEFF; border: 1px solid black\">\r\n";
 		
-		print "<b style=\"color: blue\">KittenAuth</b><br />";
+		print "<b style=\"color: blue\">KittenAuth<sup class=\"phpmeow_faqlink\"><a href=\"#\" onClick=\"phpmeow_openwindow( 'phpmeow_faq.php', 'FAQ' );\">";
+		print "[?]</a></sup></b><br />";
 		
 		/* If a legitimate human ever sees this lockout message, the rules probably need to be tweaked.  --Kris */
 		if ( $_SESSION["phpmeow_banned"] == TRUE )
@@ -85,7 +100,7 @@ class phpmeow
 		}
 		else
 		{
-			print "<b style=\"color: navy\">To prove you're not a robot, please click <i>all</i> blocks that contain </b>";
+			print "<b style=\"color: navy; font-size: 10pt\">To prove you're not a robot, please click <i>all</i> blocks that contain </b>";
 			
 			$checklist = array();
 			foreach ( $required as $rkey => $reqs )
@@ -119,7 +134,7 @@ class phpmeow
 				$requirements .= $req;
 			}
 			
-			print "<b style=\"color: red\">" . $requirements . "</b>.\r\n";
+			print "<b style=\"color: red; font-size: 10pt\">" . $requirements . "</b>.\r\n";
 		}
 		
 		print "</div>\r\n";
@@ -152,7 +167,7 @@ class phpmeow
 		}
 		
 		print "<div style=\"position: absolute; left: 0px; top: " . ($totalheight + 50) . "px; width: " . $totalwidth . "px; text-align: center\">\r\n";
-		print "<span class=\"credit\">";
+		print "<span class=\"phpmeow_credit\">";
 		print "Powered by phpMeow v" . $phpmeow_version . ".&nbsp; ";
 		print "Created by <a href=\"http://www.facebook.com/Kris.Craig\" target=\"_blank\">Kris Craig</a>.";
 		print "</span>\r\n";

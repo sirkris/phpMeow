@@ -1,0 +1,29 @@
+phpMeow - Versioning Guidelines
+--------------------------------
+
+1. phpMeow is officially maintained on Github at http://www.github.com/sirkris/phpmeow.  
+This is the repository from which version incrementation will be determined as per these guidelines.
+
+2. The FIRST release commit to the master branch (major release) shall be 1.00.  Prior to that, 
+version was 0.00.
+
+3. Each subsequent release commit to the master branch shall increment the version by +0.1.
+
+4. Each HOTFIX commit to master shall increment the version by +0.01.  However, when the next 
+release commit hits master, the hundredths digit will be reset to 0.  If that digit exceeds 
+9, use hexidecimal (A, B, and so-on).  If that digit exceeds F (if this ever happens, we've got 
+some serious QA issues!), then a thousandths digit shall appear, beginning at 1 and incrementing 
+in the same fashion.  New digits can be added indefinitely as-needed.  For example, the 57th 
+hotfix to version 1.30 would make it version 1.3FFFC (Odin forbid!).  This is of course not true 
+hex, but doing it this way prevents the confusion that would arise from having a difference 
+between version 1.31 and 1.310.  I prefer to have every possible contingency covered.
+
+5. Place an "a" or a "b" after the version number to denote alpha and beta stages, respectively.  
+This has no effect on the numbering itself.  Once a letter is incremented, or removed entirely, 
+the numbering does not in any way reset.  The stage letter can only be added/changed/removed 
+on a major release.  It is in place solely to let everyone know what stage of development the 
+project is currently in.  Anything in a release branch is assumed to be "beta" for that release 
+candidate until it is merged into master; if the "b" is not present, it's implied.  Likewise, 
+anything in develop or a feature branch is automatically considered to be "alpha."
+
+6. For the sake of my immense ego, this versioning approach shall be known as the Craig Method.

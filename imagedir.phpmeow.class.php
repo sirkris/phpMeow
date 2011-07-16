@@ -1,5 +1,19 @@
 <?php
 
+/*
+ * phpMeow - A Cute and Fuzzy Alternative to CAPTCHA
+ * Created by Kris Craig.  April - July, 2011.
+ * 
+ * phpMeow is the first fully-functional, secure 
+ * implementation of KittenAuth in PHP.
+ * 
+ * This software is open-source and you're free to 
+ * use and/or distribute it as you see fit.  See 
+ * LICENSE file for more information.
+ * 
+ * Get the latest version at:  http://www.github.com/sirkris/phpmeow
+ */
+
 class phpmeow_imagedir
 {
 	function load_images_from_subdir( $dirpath )
