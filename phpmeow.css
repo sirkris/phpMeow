@@ -1,0 +1,26 @@
+.phpmeow_credit
+{
+	font-family: Courier New;
+	font-size: 10pt;
+	color: #888888;
+}
+.phpmeow_credit a
+{
+	color: #888888;
+	text-decoration: none;
+}
+.phpmeow_credit a:hover
+{
+	color: blue;
+}
+
+.phpmeow_faqlink a
+{
+	color: green;
+	text-decoration: none;
+}
+
+.phpmeow_faqlink a:hover
+{
+	color: darkgreen;
+}
